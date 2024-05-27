@@ -99,6 +99,8 @@ else:
 surf = vmec.boundary
 surf_full_boundary = vmec_full_boundary.boundary
 bs, coils, curves, base_curves = create_initial_coils(vmec, parent_path, coils_results_path, inputs, surf_full_boundary, mpi)
+
+
 ################################################################
 ######### DEFINE OBJECTIVE FUNCTION AND ITS DERIVATIVES ########
 ################################################################
@@ -197,18 +199,23 @@ class single_stage_obj_and_der():
             surf_full_boundary.to_vtk(os.path.join(coils_results_path,f"surf_intermediate_max_mode_{max_mode}_{info['Nfeval']}"), extra_data=pointData)
             curves_to_vtk(curves, os.path.join(coils_results_path,f"curves_intermediate_max_mode_{max_mode}_{info['Nfeval']}"))
         return J, grad
+    
 # Stage 2 objective function
 JF_simple, JF, Jls, Jmscs, Jccdist, Jcsdist, Jf, J_LENGTH, J_CC, J_CS, J_CURVATURE, J_MSC, J_ALS, J_LENGTH_PENALTY = form_stage_2_objective_function(surf, bs, base_curves, curves, inputs)
-# Loop over the number of predefined maximum poloidal/toroidal modes
+
+
 if inputs.stage_1 or inputs.stage_2 or inputs.single_stage:
     oustr_dict_outer=[]
     ran_stage1 = False # Only running stage1 optimization once
     previous_max_mode=0
+
+# Loop over the number of predefined maximum poloidal/toroidal modes
     for max_mode in inputs.max_modes:
         pprint(f' Optimization with max_mode={max_mode}')
         if max_mode != previous_max_mode: oustr_dict_inner=[]
         vmec, vmec_full_boundary, surf, surf_full_boundary, qs, qi, number_vmec_dofs, prob = form_stage_1_objective_function(vmec, vmec_full_boundary, surf, surf_full_boundary, max_mode, inputs)
         dofs = np.concatenate((JF.x, vmec.x))
+        
         # Stage 1 Optimization
         if inputs.stage_1 and not ran_stage1:
             os.chdir(vmec_results_path)
@@ -219,6 +226,7 @@ if inputs.stage_1 or inputs.stage_2 or inputs.single_stage:
             if mpi.proc0_world:
                 with open(inputs.debug_output_file, "a") as myfile:
                     try:
+                        myfile.write(f"\nAfter Stage 1 optimization with {inputs.MAXITER_stage_1} iterations")
                         myfile.write(f"\nAspect ratio at max_mode {max_mode}: {vmec.aspect()}")
                         myfile.write(f"\nMean iota at {max_mode}: {vmec.mean_iota()}")
                         if not QAorQHorQIorCNT=='QI': myfile.write(f"\nQuasisymmetry objective at max_mode {max_mode}: {qs.total()}")
@@ -226,6 +234,7 @@ if inputs.stage_1 or inputs.stage_2 or inputs.single_stage:
                     except Exception as e:
                         myfile.write(e)
             ran_stage1 = True
+        
         # Stage 2 Optimization
         if not previous_max_mode==max_mode and ((inputs.stage_2 and inputs.stage_1) or previous_max_mode==0):
             pprint(f'  Performing Stage 2 optimization with {inputs.MAXITER_stage_2+inputs.MAXITER_stage_2_simple} iterations')
@@ -235,6 +244,7 @@ if inputs.stage_1 or inputs.stage_2 or inputs.single_stage:
                 dofs, bs, JF = inner_coil_loop(mpi, JF_simple, JF, Jls, Jmscs, Jccdist, Jcsdist, Jf, J_LENGTH, J_CC, J_CS, J_CURVATURE, J_MSC, J_ALS, J_LENGTH_PENALTY, vmec, curves, base_curves, surf, coils_results_path, number_vmec_dofs, bs, max_mode, inputs, figures_results_path, surf_full_boundary)
                 with open(inputs.debug_output_file, "a") as myfile:
                     try:
+                        myfile.write(f"\nAfter Stage 2 optimization with {inputs.MAXITER_stage_2+inputs.MAXITER_stage_2_simple} iterations")
                         myfile.write(f"\nAspect ratio at max_mode {max_mode}: {vmec.aspect()}")
                         myfile.write(f"\nMean iota at {max_mode}: {vmec.mean_iota()}")
                         if not QAorQHorQIorCNT=='QI': myfile.write(f"\nQuasisymmetry objective at max_mode {max_mode}: {qs.total()}")
@@ -249,6 +259,7 @@ if inputs.stage_1 or inputs.stage_2 or inputs.single_stage:
             except Exception as e:
                 pprint(e)
             mpi.comm_world.Bcast(dofs, root=0)
+        
         # Single stage Optimization
         if inputs.single_stage:
             pprint(f'  Performing Single Stage optimization with {inputs.MAXITER_single_stage} iterations')
@@ -260,6 +271,7 @@ if inputs.stage_1 or inputs.stage_2 or inputs.single_stage:
                     res = minimize(obj_and_der.fun, dofs, args=(prob_jacobian,{'Nfeval':0},max_mode,oustr_dict_inner), jac=True, method='BFGS', options={'maxiter': inputs.MAXITER_single_stage}, tol=1e-15)
                     with open(inputs.debug_output_file, "a") as myfile:
                         try:
+                            myfile.write(f'\nAfter Single Stage optimization with {inputs.MAXITER_single_stage} iterations')
                             myfile.write(f"\nAspect ratio at max_mode {max_mode}: {vmec.aspect()}")
                             myfile.write(f"\nMean iota at {max_mode}: {vmec.mean_iota()}")
                             if not QAorQHorQIorCNT=='QI': myfile.write(f"\nQuasisymmetry objective at max_mode {max_mode}: {qs.total()}")
@@ -267,6 +279,7 @@ if inputs.stage_1 or inputs.stage_2 or inputs.single_stage:
                         except Exception as e:
                             myfile.write(e)
             mpi.comm_world.Bcast(dofs, root=0)
+        
         # Stage 2 Optimization after single_stage
         if (inputs.stage_2 and inputs.single_stage) or (inputs.stage_2 and not inputs.single_stage and not inputs.stage_1 and not previous_max_mode==0):
             pprint(f'  Performing Stage 2 optimization with {inputs.MAXITER_stage_2+inputs.MAXITER_stage_2_simple} iterations')
@@ -276,6 +289,7 @@ if inputs.stage_1 or inputs.stage_2 or inputs.single_stage:
                 dofs, bs, JF = inner_coil_loop(mpi, JF_simple, JF, Jls, Jmscs, Jccdist, Jcsdist, Jf, J_LENGTH, J_CC, J_CS, J_CURVATURE, J_MSC, J_ALS, J_LENGTH_PENALTY, vmec, curves, base_curves, surf, coils_results_path, number_vmec_dofs, bs, max_mode, inputs, figures_results_path, surf_full_boundary, write_coils=False)
                 with open(inputs.debug_output_file, "a") as myfile:
                     try:
+                        myfile.write(f'\nAfter last Second Stage optimization with {inputs.MAXITER_stage_2+inputs.MAXITER_stage_2_simple} iterations')
                         myfile.write(f"\nAspect ratio at max_mode {max_mode}: {vmec.aspect()}")
                         myfile.write(f"\nMean iota at {max_mode}: {vmec.mean_iota()}")
                         if not QAorQHorQIorCNT=='QI': myfile.write(f"\nQuasisymmetry objective at max_mode {max_mode}: {qs.total()}")
@@ -292,10 +306,10 @@ if inputs.stage_1 or inputs.stage_2 or inputs.single_stage:
             vmec.write_input(os.path.join(vmec_results_path, f'input.{inputs.name}_maxmode{max_mode}'))
         os.chdir(vmec_results_path)
         try:
-            pprint(f"Aspect ratio at max_mode {max_mode}: {vmec.aspect()}")
-            pprint(f"Mean iota at {max_mode}: {vmec.mean_iota()}")
-            if not QAorQHorQIorCNT=='QI': pprint(f"Quasisymmetry objective at max_mode {max_mode}: {qs.total()}")
-            pprint(f"Squared flux at max_mode {max_mode}: {Jf.J()}")
+            pprint(f"\nAspect ratio at max_mode {max_mode}: {vmec.aspect()}")
+            pprint(f"\nMean iota at {max_mode}: {vmec.mean_iota()}")
+            if not QAorQHorQIorCNT=='QI': pprint(f"\nQuasisymmetry objective at max_mode {max_mode}: {qs.total()}")
+            pprint(f"\nSquared flux at max_mode {max_mode}: {Jf.J()}")
         except Exception as e:
             pprint(e)
         os.chdir(current_path)
@@ -352,6 +366,8 @@ if inputs.stage_1 or inputs.stage_2 or inputs.single_stage:
     except Exception as e:
         pprint(e)
 os.chdir(current_path)
+
+
 if inputs.create_wout_final:
     try:
         vmec_final = Vmec(os.path.join(current_path, f'input.final'))

@@ -115,7 +115,7 @@ finite_difference_abs_step = 1e-4 # Absolute step size for the stage 1 finite di
 diff_method = "forward" # "forward" # "centered"
 ftol = 1e-5 # threshold to end optimization
 # Stage 2 optimization parameters
-coils_objective_weight = 1e+2 # Scale of stage 2 objective with respect to stage 1 objective
+coils_objective_weight = 5e+2 # Scale of stage 2 objective with respect to stage 1 objective
 R0 = 1.0 # Major radius for the initial circular coils
 R1 = 0.4 # Minor radius for the initial circular coils
 initial_current = 1e5 # Initial current for all coils

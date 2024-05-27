@@ -136,13 +136,13 @@ def inner_coil_loop(mpi, JF_simple, JF, Jls, Jmscs, Jccdist, Jcsdist, Jf, J_LENG
     pprint(f'\n  Running simple intermediate coil loop with {inputs.MAXITER_stage_2_simple} iterations:')
     info_simple={'Nfeval':0}
     bs.set_points(surf.gamma().reshape((-1, 3)))
-    res = minimize(fun_coils_simple, dofs[:-number_vmec_dofs], jac=True, args=(info_simple,oustr_dict), method='L-BFGS-B', options={'maxiter': inputs.MAXITER_stage_2_simple, 'maxcor': 300}, tol=1e-10)
+    res = minimize(fun_coils_simple, dofs[:-number_vmec_dofs], jac=True, args=(info_simple,oustr_dict), method='L-BFGS-B', options={'maxiter': inputs.MAXITER_stage_2_simple, 'maxcor': 300}, tol=inputs.ftol)
     dofs[:-number_vmec_dofs] = res.x
     JF.x = dofs[:-number_vmec_dofs]
     pprint(f'\n  Running more complete intermediate coil loop with {inputs.MAXITER_stage_2} iterations:')
     info_not_simple={'Nfeval':0}
     bs.set_points(surf.gamma().reshape((-1, 3)))
-    res = minimize(fun_coils, dofs[:-number_vmec_dofs], jac=True, args=(info_not_simple,oustr_dict), method='L-BFGS-B', options={'maxiter': inputs.MAXITER_stage_2, 'maxcor': 300}, tol=1e-10)
+    res = minimize(fun_coils, dofs[:-number_vmec_dofs], jac=True, args=(info_not_simple,oustr_dict), method='L-BFGS-B', options={'maxiter': inputs.MAXITER_stage_2, 'maxcor': 300}, tol=inputs.ftol)
     dofs[:-number_vmec_dofs] = res.x
     JF.x = dofs[:-number_vmec_dofs]
     if write_coils:

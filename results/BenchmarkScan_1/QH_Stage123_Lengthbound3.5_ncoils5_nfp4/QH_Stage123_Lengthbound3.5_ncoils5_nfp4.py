@@ -67,7 +67,7 @@ maximum_mirror = 0.19 # Defines the maximum mirror ratio of |B| allowed in the Q
 stage_1 = False # Perform a stage-1 optimization
 stage_2 = False # Perform a stage-2 optimization
 single_stage = False # Perform a single stage optimization
-order = 16 # Number of Fourier modes describing each Cartesian component of each coil
+order = 12 # Number of Fourier modes describing each Cartesian component of each coil
 ## General input parameters
 # Frequent use
 max_modes = [2] # Fourier mode resolution for the plasma surface
@@ -115,7 +115,7 @@ finite_difference_abs_step = 1e-4 # Absolute step size for the stage 1 finite di
 diff_method = "forward" # "forward" # "centered"
 ftol = 1e-5 # threshold to end optimization
 # Stage 2 optimization parameters
-coils_objective_weight = 1e+2 # Scale of stage 2 objective with respect to stage 1 objective
+coils_objective_weight = 5e+3 # Scale of stage 2 objective with respect to stage 1 objective
 R0 = 1.0 # Major radius for the initial circular coils
 R1 = 0.4 # Minor radius for the initial circular coils
 initial_current = 1e5 # Initial current for all coils

@@ -1,0 +1,32 @@
+QFM quasisymmetry results for ncoils=3, for the different runs.
+
+Wih mpol=ntor=4
+Run 1
+Quasisymmetry of QFM fixed boundary solution single-stage: 0.08278205270703401
+Quasisymmetry of QFM fixed boundary solution stage 1+2: 0.4479062645381786
+
+Run 2
+Quasisymmetry of QFM fixed boundary solution single-stage: 0.08855100000405988
+Quasisymmetry of QFM fixed boundary solution stage 1+2: 0.44898462395230626
+
+Run 3
+Quasisymmetry of QFM fixed boundary solution single-stage: 0.10697800491884266
+Quasisymmetry of QFM fixed boundary solution stage 1+2: 0.1634734367537739
+
+Wih mpol=ntor=3
+Run 1
+Quasisymmetry of QFM fixed boundary solution single-stage: 0.07831113971956707
+Quasisymmetry of QFM fixed boundary solution stage 1+2: 0.06832535009251292
+
+Run 2
+Quasisymmetry of QFM fixed boundary solution single-stage: 0.060813081611023605
+Quasisymmetry of QFM fixed boundary solution stage 1+2: 0.06839873879916981
+
+
+Run 3
+Quasisymmetry of QFM fixed boundary solution single-stage: 0.07672858990178981
+Quasisymmetry of QFM fixed boundary solution stage 1+2: 0.07221556334511152
+
+Open questions:
+- Does plot.py give consistent results? Is the same QFM surface found consistently? Is the same VMEC quasisymmetry found consistently?
+- What are the results for the full scan?

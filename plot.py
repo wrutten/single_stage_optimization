@@ -40,7 +40,7 @@ parser = argparse.ArgumentParser()
 # parser.add_argument("--results_folder",default='Paper_CNT_Stage123_Lengthbound3.8_ncoils4_circular')
 # parser.add_argument("--results_folder",default='QA_Stage123_Lengthbound5.5_ncoils3_nfp2')
 # parser.add_argument("--results_folder",default='QA_Stage123_Lengthbound5.5_ncoils2_nfp3')
-parser.add_argument("--results_folder",default='QH_QFM_test/QH_Stage123_Lengthbound3.5_ncoils2_nfp4_3')
+parser.add_argument("--results_folder",default='QH_QFM_test/QH_Stage123_Lengthbound3.5_ncoils3_nfp4_3_mn3')
 # parser.add_argument("--results_folder",default='QI_Stage123_Lengthbound4.5_ncoils3_nfp2')
 # parser.add_argument("--results_folder",default='QH_Stage123_Lengthbound3.5_ncoils3_nfp4')
 parser.add_argument("--coils_stage1", default='biot_savart_inner_loop_max_mode_3.json')
@@ -55,8 +55,8 @@ parser.add_argument("--nfieldlines", type=int, default=12)
 parser.add_argument("--tmax_fl", type=int, default=5000)
 parser.add_argument("--nphi_QFM", type=int, default=30) #!!! #50?? based on inputs.py
 parser.add_argument("--ntheta_QFM", type=int, default=40) #!!! #35?? based on inputs.py
-parser.add_argument("--mpol", type=int, default=4) #!!!
-parser.add_argument("--ntor", type=int, default=4) #!!!
+parser.add_argument("--mpol", type=int, default=3) #!!!
+parser.add_argument("--ntor", type=int, default=3) #!!!
 parser.add_argument("--nphi", type=int, default=256)
 parser.add_argument("--ntheta", type=int, default=128)
 parser.add_argument("--tol_qfm", type=float, default=1e-14) #!!!

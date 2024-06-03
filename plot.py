@@ -40,35 +40,35 @@ parser = argparse.ArgumentParser()
 # parser.add_argument("--results_folder",default='Paper_CNT_Stage123_Lengthbound3.8_ncoils4_circular')
 # parser.add_argument("--results_folder",default='QA_Stage123_Lengthbound5.5_ncoils3_nfp2')
 # parser.add_argument("--results_folder",default='QA_Stage123_Lengthbound5.5_ncoils2_nfp3')
-parser.add_argument("--results_folder",default='QI_Stage123_Lengthbound5.0_ncoils8_nfp1')
+parser.add_argument("--results_folder",default='QH_QFM_test/QH_Stage123_Lengthbound3.5_ncoils2_nfp4_3')
 # parser.add_argument("--results_folder",default='QI_Stage123_Lengthbound4.5_ncoils3_nfp2')
 # parser.add_argument("--results_folder",default='QH_Stage123_Lengthbound3.5_ncoils3_nfp4')
 parser.add_argument("--coils_stage1", default='biot_savart_inner_loop_max_mode_3.json')
-parser.add_argument("--create_QFM", dest="create_QFM", default=False, action="store_true")
-parser.add_argument("--create_QFM_stage12", dest="create_QFM_stage12", default=False, action="store_true")
+parser.add_argument("--create_QFM", dest="create_QFM", default=True, action="store_true")
+parser.add_argument("--create_QFM_stage12", dest="create_QFM_stage12", default=True, action="store_true")
 parser.add_argument("--create_Poincare", dest="create_Poincare", default=False, action="store_true")
 parser.add_argument("--whole_torus", dest="whole_torus", default=True, action="store_true")
-parser.add_argument("--plot_VMEC", dest="plot_VMEC", default=False, action="store_true")
-parser.add_argument("--plot_VMEC_QFM", dest="plot_VMEC_QFM", default=False, action="store_true")
+parser.add_argument("--plot_VMEC", dest="plot_VMEC", default=True, action="store_true")
+parser.add_argument("--plot_VMEC_QFM", dest="plot_VMEC_QFM", default=True, action="store_true")
 parser.add_argument("--volume_scale", type=float, default=1.0)
 parser.add_argument("--nfieldlines", type=int, default=12)
 parser.add_argument("--tmax_fl", type=int, default=5000)
-parser.add_argument("--nphi_QFM", type=int, default=30)
-parser.add_argument("--ntheta_QFM", type=int, default=40)
-parser.add_argument("--mpol", type=int, default=12)
-parser.add_argument("--ntor", type=int, default=12)
+parser.add_argument("--nphi_QFM", type=int, default=30) #!!! #50?? based on inputs.py
+parser.add_argument("--ntheta_QFM", type=int, default=40) #!!! #35?? based on inputs.py
+parser.add_argument("--mpol", type=int, default=4) #!!!
+parser.add_argument("--ntor", type=int, default=4) #!!!
 parser.add_argument("--nphi", type=int, default=256)
 parser.add_argument("--ntheta", type=int, default=128)
-parser.add_argument("--tol_qfm", type=float, default=1e-14)
+parser.add_argument("--tol_qfm", type=float, default=1e-14) #!!!
 parser.add_argument("--tol_poincare", type=float, default=1e-15)
-parser.add_argument("--maxiter_qfm", type=int, default=1000)
+parser.add_argument("--maxiter_qfm", type=int, default=1000) #!!!
 parser.add_argument("--constraint_weight", type=float, default=1e+0)
 parser.add_argument("--ntheta_VMEC", type=int, default=80)
 parser.add_argument("--boozxform_nsurfaces", type=int, default=10)
 parser.add_argument("--filename_final", default='input.final')
 parser.add_argument("--filename_stage1", default='input.stage1')
 parser.add_argument("--finite_beta", dest="finite_beta", default=False, action="store_true")
-parser.add_argument("--vmec_verbose", dest="vmec_verbose", default=False, action="store_true")
+parser.add_argument("--vmec_verbose", dest="vmec_verbose", default=True, action="store_true")
 args = parser.parse_args()
 filename_vmec_final = 'wout_final.nc'
 filename_bs_final = 'biot_savart_opt.json'
@@ -121,6 +121,7 @@ this_path = os.path.join(parent_path, results_parent_folder, args.results_folder
 OUT_DIR = os.path.join(this_path, "output")
 if mpi.proc0_world: Path(OUT_DIR).mkdir(parents=True, exist_ok=True)
 os.chdir(this_path)
+
 #### Stage 1 for comparison ####
 if args.whole_torus: vmec_stage1 = Vmec(args.filename_stage1, mpi=mpi, nphi=args.nphi, ntheta=args.ntheta, verbose=args.vmec_verbose)
 else: vmec_stage1 = Vmec(args.filename_stage1, mpi=mpi, nphi=args.nphi, ntheta=args.ntheta, range_surface='half period', verbose=args.vmec_verbose)
@@ -140,6 +141,7 @@ if args.finite_beta:
     else: BdotN_surf_stage1 = np.sum(Bbs_stage1 * s_stage1.unitnormal(), axis=2) - vc_stage1.B_external_normal
 else:
     BdotN_surf_stage1 = np.sum(Bbs_stage1 * s_stage1.unitnormal(), axis=2)
+
 #### Single stage results ####
 if args.whole_torus: vmec_final = Vmec(filename_vmec_final, mpi=mpi, nphi=args.nphi, ntheta=args.ntheta, verbose=args.vmec_verbose)
 else: vmec_final = Vmec(filename_vmec_final, mpi=mpi, nphi=args.nphi, ntheta=args.ntheta, range_surface='half period', verbose=args.vmec_verbose)
@@ -157,6 +159,7 @@ if args.finite_beta:
     else: BdotN_surf_final = np.sum(Bbs_final * s_final.unitnormal(), axis=2) - vc_final.B_external_normal
 else:
     BdotN_surf_final = np.sum(Bbs_final * s_final.unitnormal(), axis=2)
+
 ###### PLOTTING ######
 pprint('Plotting stage 1 surface and coils')
 pointData_stage1 = {"B·n": BdotN_surf_stage1[:, :, None]}
@@ -173,6 +176,7 @@ s_final.to_vtk(os.path.join(coils_directory,"surf_optPlot"), extra_data=pointDat
 sys.path.insert(1, os.path.join(parent_path, '../single_stage/plotting'))
 if args.plot_VMEC and os.path.isfile(os.path.join(this_path, filename_vmec_final)):
     vmecPlot2_main(file=os.path.join(this_path, filename_vmec_final), name='VMEC_final', figures_folder=OUT_DIR)
+
 ##### CREATE QFM #####
 vmec_ran_QFM = False
 if args.create_QFM:
@@ -246,7 +250,7 @@ if args.create_QFM:
                 pprint('VMEC QFM did not converge')
                 pprint(e)
         try:
-            shutil.move(os.path.join(OUT_DIR, f"wout_qfm_000_000000.nc"), os.path.join(this_path, f"wout_qfm.nc"))
+            shutil.move(os.path.join(OUT_DIR, f"wout_qfm_000_000000.nc"), os.path.join(this_path, f"wout_QFM.nc"))
             os.remove(os.path.join(OUT_DIR, f'input.qfm_000_000000'))
         except Exception as e:
             print(e)
@@ -318,20 +322,21 @@ if (vmec_ran_QFM or os.path.isfile(os.path.join(this_path, f"wout_QFM.nc"))) and
         booz_surfaces = np.linspace(0,1,args.boozxform_nsurfaces,endpoint=False)
         pprint(f' booz_surfaces={booz_surfaces}')
         b1.register(booz_surfaces)
-        pprint('Running BOOZ_XFORM')
-        b1.run()
-        b1.bx.write_boozmn(os.path.join(OUT_DIR,"boozmn_QFM.nc"))
-        pprint("Plot BOOZ_XFORM")
-        fig = plt.figure(); bx.surfplot(b1.bx, js=1,  fill=False, ncontours=35)
-        plt.savefig(os.path.join(OUT_DIR, "Boozxform_surfplot_1_QFM.pdf"), bbox_inches = 'tight', pad_inches = 0); plt.close()
-        fig = plt.figure(); bx.surfplot(b1.bx, js=int(args.boozxform_nsurfaces/2), fill=False, ncontours=35)
-        plt.savefig(os.path.join(OUT_DIR, "Boozxform_surfplot_2_QFM.pdf"), bbox_inches = 'tight', pad_inches = 0); plt.close()
-        fig = plt.figure(); bx.surfplot(b1.bx, js=args.boozxform_nsurfaces-1, fill=False, ncontours=35)
-        plt.savefig(os.path.join(OUT_DIR, "Boozxform_surfplot_3_QFM.pdf"), bbox_inches = 'tight', pad_inches = 0); plt.close()
-        fig = plt.figure(); bx.symplot(b1.bx, helical_detail = helical_detail, sqrts=True)
-        plt.savefig(os.path.join(OUT_DIR, "Boozxform_symplot_QFM.pdf"), bbox_inches = 'tight', pad_inches = 0); plt.close()
-        fig = plt.figure(); bx.modeplot(b1.bx, sqrts=True); plt.xlabel(r'$s=\psi/\psi_b$')
-        plt.savefig(os.path.join(OUT_DIR, "Boozxform_modeplot_QFM.pdf"), bbox_inches = 'tight', pad_inches = 0); plt.close()
+        ## Commenting out BOOZ_XFORM run, since it leads to some deep bug
+        # pprint('Running BOOZ_XFORM')
+        # b1.run()
+        # b1.bx.write_boozmn(os.path.join(OUT_DIR,"boozmn_QFM.nc"))
+        # pprint("Plot BOOZ_XFORM")
+        # fig = plt.figure(); bx.surfplot(b1.bx, js=1,  fill=False, ncontours=35)
+        # plt.savefig(os.path.join(OUT_DIR, "Boozxform_surfplot_1_QFM.pdf"), bbox_inches = 'tight', pad_inches = 0); plt.close()
+        # fig = plt.figure(); bx.surfplot(b1.bx, js=int(args.boozxform_nsurfaces/2), fill=False, ncontours=35)
+        # plt.savefig(os.path.join(OUT_DIR, "Boozxform_surfplot_2_QFM.pdf"), bbox_inches = 'tight', pad_inches = 0); plt.close()
+        # fig = plt.figure(); bx.surfplot(b1.bx, js=args.boozxform_nsurfaces-1, fill=False, ncontours=35)
+        # plt.savefig(os.path.join(OUT_DIR, "Boozxform_surfplot_3_QFM.pdf"), bbox_inches = 'tight', pad_inches = 0); plt.close()
+        # fig = plt.figure(); bx.symplot(b1.bx, helical_detail = helical_detail, sqrts=True)
+        # plt.savefig(os.path.join(OUT_DIR, "Boozxform_symplot_QFM.pdf"), bbox_inches = 'tight', pad_inches = 0); plt.close()
+        # fig = plt.figure(); bx.modeplot(b1.bx, sqrts=True); plt.xlabel(r'$s=\psi/\psi_b$')
+        # plt.savefig(os.path.join(OUT_DIR, "Boozxform_modeplot_QFM.pdf"), bbox_inches = 'tight', pad_inches = 0); plt.close()
 
 if args.create_Poincare:
     if vmec_ran_QFM or os.path.isfile(os.path.join(this_path, f"wout_QFM.nc")):
@@ -398,9 +403,9 @@ if args.create_QFM_stage12:
     else:
         if not os.path.isfile(os.path.join(this_path, f"input.qfm_stage12")):
             pprint('Finding QFM surface for stage 1+2')
-            s = SurfaceRZFourier.from_vmec_input(args.filename_stage1, nphi=args.nphi_QFM, ntheta=args.ntheta_QFM, range="half period")
+            s = SurfaceRZFourier.from_vmec_input(os.path.join(this_path, args.filename_stage1), nphi=args.nphi_QFM, ntheta=args.ntheta_QFM, range="half period")
             s.change_resolution(args.mpol, args.ntor)
-            s_original_VMEC = SurfaceRZFourier.from_vmec_input(args.filename_stage1, nphi=args.nphi_QFM, ntheta=args.ntheta_QFM, range="half period")
+            s_original_VMEC = SurfaceRZFourier.from_vmec_input(os.path.join(this_path, args.filename_stage1), nphi=args.nphi_QFM, ntheta=args.ntheta_QFM, range="half period")
             nfp = vmec_final.wout.nfp
             s.to_vtk(os.path.join(OUT_DIR, 'QFM_stage12_original_VMEC'))
             pprint('Obtaining QFM surface for stage 1+2')

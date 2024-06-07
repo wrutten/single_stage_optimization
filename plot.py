@@ -105,8 +105,8 @@ def trace_fieldlines(bfield, R0, Z0):
 def find_ncoils(string):
     parts = string.split("_")
     for part in parts:
-        if part[:5] == "ncoils":
-            return int(part[5:])
+        if part[:6] == "ncoils":
+            return int(part[6:])
 def helical_detail_function(string):
     YY = string.split("_")[0]
     if YY == "QH" or YY == "QI":
@@ -264,7 +264,7 @@ if args.create_QFM:
         qs = QuasisymmetryRatioResidual(vmec_QFM, quasisymmetry_target_surfaces, helicity_m=1, helicity_n=quasisymmetry_helicity_n)
         pprint(f"Quasisymmetry of QFM fixed boundary solution single-stage: {qs.total()}")
         with open(os.path.join(OUT_DIR, "output_QFM_qs.txt"), "w") as f:
-            f.write(f"Quasisymmetry of QFM fixed boundary solution: {qs.total()}")
+            f.write(f"Quasisymmetry of QFM fixed boundary solution single-stage: {qs.total()}")
 
 if (vmec_ran_QFM or os.path.isfile(os.path.join(this_path, f"wout_QFM.nc"))) and args.plot_VMEC_QFM:
     nfp = vmec_final.wout.nfp

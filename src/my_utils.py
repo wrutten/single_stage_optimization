@@ -64,4 +64,40 @@ def get_convergence_data(rootdir):
 
     return ts_data, ss_data
 
+# overlapping functionality with extract_ncoils_from_path... this is taken from plot.py
+def find_ncoils(string):
+    parts = string.split("_")
+    for part in parts:
+        if part[:6] == "ncoils":
+            return int(part[6:])
+
+def read_QFM_output_files(parent_dir):
+    output_dict = {}
+    # ss_QFM_QS = []
+    # ts_QFM_QS = []
+    # Loop through all subdirectories of the parent directory
+    for subdir in os.listdir(parent_dir):
+        subdir_path = os.path.join(parent_dir, subdir)
+        if os.path.isdir(subdir_path):
+            ss_file_path = os.path.join(subdir_path, 'output', 'output_QFM_qs.txt')
+            ts_file_path = os.path.join(subdir_path, 'output', 'output_QFM_qs_stage12.txt')
+
+            # Find QFM QS from single stage output file
+            if os.path.isfile(ss_file_path):
+                with open(ss_file_path, 'r') as file:
+                    content = file.read()
+                    ss_QFM_QS = float(content.split(':')[1].strip())
+
+            # Find QFM QS from two stage output file
+            if os.path.isfile(ts_file_path):
+                with open(ts_file_path, 'r') as file:
+                    content = file.read()
+                    ts_QFM_QS = float(content.split(':')[1].strip())
+
+            ncoils = find_ncoils(subdir_path)
+
+            output_dict[subdir] = [ncoils, ss_QFM_QS, ts_QFM_QS]
+
+    return output_dict
+
 

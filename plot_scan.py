@@ -6,13 +6,10 @@ Script to analyse scan results from iteration .csv files.
 import os
 from pathlib import Path
 import matplotlib.pyplot as plt
-import matplotlib.colors as cm
-import numpy as np
 from src.my_utils import get_convergence_data
-from matplotlib import colormaps
 
 parent_path = str(Path(__file__).parent.resolve())
-scan_name = 'results/QH_BenchmarkScan_2/'
+scan_name = 'results/QH_BenchmarkScan_3/'
 os.chdir(parent_path)
 rootdir  = os.path.join(parent_path, scan_name)
 
@@ -198,21 +195,39 @@ fig_name = 'Scan_objectives.png'
 fig_path = rootdir + fig_name
 fig.savefig(fig_path)
 
-# ## Plot curvatures
-# fig5, ax5 = plt.subplots()
-# ax5.scatter(ss_X,ss_J, marker='x', color='0')
-# ax5.scatter(ts_X,ts_J, marker='x', color='tab:red')
+# ## Plot proof that coils are in eachothers way
+fig, (ax1,ax2) = plt.subplots(1, 2, figsize=figsize_sidebyside, tight_layout=True,)
 
-# ax5.legend(['Single stage', 'Two stage'], loc='center left', bbox_to_anchor=(1, 0.5))
+# Plot correct constraint value
+if scan_name == 'results/QH_BenchmarkScan_3/':
+    Coil_constraint_value = 0.15
+elif scan_name == 'results/QH_BenchmarkScan_2/':
+    Coil_constraint_value = 0.08
+else:
+    Coil_constraint_value = 0.08
+    print('Coil_constraint_value = 0.08, is used may not be correct.')
 
-# ax5.set_yscale('log')
-# ax5.set_xlabel('# coils')
-# ax5.set_ylabel('J')
-# fig5.tight_layout()
+# Actual coil-coil distances
+ax1.scatter(ss_X,ss_CC, marker='x', color='0')
+ax1.scatter(ts_X,ts_CC, marker='x', color='tab:red')
+ax1.axhline(y=Coil_constraint_value, color='k', linestyle='--')
+ax1.set_xlabel('# coils')
+ax1.set_ylabel('d_min [m]')
+ax1.set_title('Minimum coil-coil distance')
 
-# fig_name = 'scan_J.png'
-# fig_path = rootdir + fig_name
-# fig5.savefig(fig_path)
-# # fig1.show()
+# Actual msc
+ax2.scatter(ss_X,ss_msc, marker='x', color='0')
+ax2.scatter(ts_X,ts_msc, marker='x', color='tab:red')
+ax2.axhline(y=10, color='k', linestyle='--')
+ax2.legend(['Single stage', 'Two stage', 'Constraint value'], loc='center left', bbox_to_anchor=(1, 0.5))
+ax2.set_xlabel('# coils')
+ax2.set_ylabel('unit?')
+ax2.set_title('Maximum coil mean square curvature')
+
+
+fig_name = 'scan_coil_problems.png'
+fig_path = rootdir + fig_name
+fig.savefig(fig_path)
+# fig1.show()
 
 print('Finished plotting')

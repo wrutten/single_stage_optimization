@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from src.my_utils import get_convergence_data, read_QFM_output_files
 
 parent_path = str(Path(__file__).parent.resolve())
-scan_name = 'results/QH_QFM_test2/'
+scan_name = 'results/QH_BenchmarkLongerRunsChangeCoilWeights/'
 os.chdir(parent_path)
 rootdir  = os.path.join(parent_path, scan_name)
 

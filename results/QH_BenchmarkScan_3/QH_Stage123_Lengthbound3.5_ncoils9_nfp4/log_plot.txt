@@ -1,0 +1,185 @@
+Running plot.py on results/QH_BenchmarkScan_3/QH_Stage123_Lengthbound3.5_ncoils9_nfp4
+QStandardPaths: wrong permissions on runtime directory /run/user/1000/, 0755 instead of 0700
+Finding QFM surface
+Obtaining QFM surface
+Initial qfm.J()=0.0021854030158763187
+Initial ||vol constraint||=0.00000000e+00, ||residual||=2.18540302e-03
+ftol =  1e-14
+||vol constraint||=2.12383667e-10, ||residual||=4.72853236e-05
+||vol constraint||=3.92115388e-18, ||residual||=4.72856987e-05
+Found QFM surface in 11.517353534698486s.
+[Errno 2] No such file or directory: '/home/wrutten/single_stage_optimization/results/QH_BenchmarkScan_3/QH_Stage123_Lengthbound3.5_ncoils9_nfp4/output/wout_qfm_000_000000.nc'
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  SEQ =    1 TIME SLICE  0.0000E+00
+  PROCESSING INPUT.stage1
+  THIS IS PARVMEC (PARALLEL VMEC), VERSION 9.0
+  Lambda: Full Radial Mesh. L-Force: hybrid full/half.
+
+  COMPUTER: x86_64-conda-linux-gnu   OS:    RELEASE: x86_64  DATE = Jun 07,2024  TIME = 14:36:18
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  SEQ =    1 TIME SLICE  0.0000E+00
+  PROCESSING INPUT.final
+  THIS IS PARVMEC (PARALLEL VMEC), VERSION 9.0
+  Lambda: Full Radial Mesh. L-Force: hybrid full/half.
+
+  COMPUTER: x86_64-conda-linux-gnu   OS:    RELEASE: x86_64  DATE = Jun 07,2024  TIME = 14:36:43
+
+  NS =   16 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =   2000
+  PROCESSOR COUNT - RADIAL:    1
+ INITIAL JACOBIAN CHANGED SIGN!
+ TRYING TO IMPROVE INITIAL MAGNETIC AXIS GUESS
+  ---- Improved AXIS Guess ----
+      RAXIS_CC =   0.98138534400529986       0.19544115373106583        3.4036726967624983E-002  -7.4681120901035365E-003
+      ZAXIS_CS =   -0.0000000000000000       0.15630625310158702        2.6648676908419502E-002  -2.3454461228334951E-002
+  -----------------------------
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  3.83E-02  4.33E-02  5.64E-02  1.203E+00  9.00E-01  1.3591E-01
+  200  1.12E-08  2.30E-09  1.39E-09  1.176E+00  9.00E-01  1.2750E-01
+  400  3.86E-11  7.29E-12  1.41E-12  1.179E+00  9.00E-01  1.2750E-01
+  600  2.32E-14  1.12E-14  2.70E-15  1.179E+00  9.00E-01  1.2750E-01
+  639  9.82E-15  3.87E-15  1.00E-15  1.179E+00  9.00E-01  1.2750E-01
+
+  NS =   51 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =   3000
+  PROCESSOR COUNT - RADIAL:    1
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  3.92E-03  4.66E-03  2.11E-06  1.179E+00  9.00E-01  1.2750E-01
+  200  6.78E-10  1.38E-10  3.11E-11  1.179E+00  9.00E-01  1.2750E-01
+  400  1.71E-11  2.76E-12  7.42E-13  1.179E+00  9.00E-01  1.2750E-01
+  600  5.71E-13  1.72E-13  1.32E-14  1.179E+00  9.00E-01  1.2750E-01
+  800  1.05E-14  3.60E-15  3.10E-16  1.179E+00  9.00E-01  1.2750E-01
+  804  9.96E-15  3.49E-15  2.97E-16  1.179E+00  9.00E-01  1.2750E-01
+
+  NS =  101 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =  20000
+  PROCESSOR COUNT - RADIAL:    1
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  5.63E-03  4.79E-03  1.27E-07  1.179E+00  9.00E-01  1.2750E-01
+  200  9.83E-09  1.91E-09  5.01E-11  1.179E+00  7.64E-01  1.2750E-01
+  400  1.48E-10  2.70E-11  4.79E-12  1.179E+00  7.64E-01  1.2750E-01
+  600  1.90E-11  2.95E-12  5.78E-13  1.179E+00  7.64E-01  1.2750E-01
+  800  3.59E-12  3.17E-13  7.45E-14  1.179E+00  7.64E-01  1.2750E-01
+ 1000  6.16E-13  5.24E-14  1.02E-14  1.179E+00  7.64E-01  1.2750E-01
+ 1200  4.75E-14  1.25E-14  7.16E-16  1.179E+00  7.64E-01  1.2750E-01
+ 1299  9.86E-15  3.86E-15  1.29E-16  1.179E+00  7.64E-01  1.2750E-01
+Quasisymmetry of QFM fixed boundary solution single-stage: 27.429764563250117
+Finding QFM surface for stage 1+2
+Obtaining QFM surface for stage 1+2
+Initial qfm.J()=0.009016018357753347
+Initial ||vol constraint||=0.00000000e+00, ||residual||=9.01601836e-03
+ftol =  1e-14
+||vol constraint||=6.78622306e-10, ||residual||=1.57801909e-04
+||vol constraint||=1.43327706e-28, ||residual||=1.57797457e-04
+Found QFM surface in 15.81010627746582s.
+[Errno 2] No such file or directory: '/home/wrutten/single_stage_optimization/results/QH_BenchmarkScan_3/QH_Stage123_Lengthbound3.5_ncoils9_nfp4/output/wout_qfm_stage12_000_000000.nc'
+
+ EXECUTION TERMINATED NORMALLY
+
+ FILE : final_000_000000
+ NUMBER OF JACOBIAN RESETS =    1
+
+    TOTAL COMPUTATIONAL TIME (SEC)         3.25
+    TIME TO INPUT/OUTPUT                   0.00
+       READ IN DATA                        0.00
+       WRITE OUT DATA TO WOUT              0.00
+    TIME IN FUNCT3D                        3.23
+       BCOVAR FIELDS                       0.59
+       FOURIER TRANSFORM                   0.47
+       INVERSE FOURIER TRANSFORM           0.39
+       FORCES AND SYMMETRIZE               0.64
+       RESIDUE                             0.90
+       EQFORCE                             0.00
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  VMEC OUTPUT FILES ALREADY EXIST: OVERWRITING THEM ...
+  SEQ =    1 TIME SLICE  0.0000E+00
+  PROCESSING INPUT.final
+  THIS IS PARVMEC (PARALLEL VMEC), VERSION 9.0
+  Lambda: Full Radial Mesh. L-Force: hybrid full/half.
+
+  COMPUTER: x86_64-conda-linux-gnu   OS:    RELEASE: x86_64  DATE = Jun 07,2024  TIME = 14:37:02
+
+  NS =   16 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =   2000
+  PROCESSOR COUNT - RADIAL:    1
+ INITIAL JACOBIAN CHANGED SIGN!
+ TRYING TO IMPROVE INITIAL MAGNETIC AXIS GUESS
+  ---- Improved AXIS Guess ----
+      RAXIS_CC =   0.95359017327079942       0.22275142550641211        1.2618159601407119E-002   3.0713464278872660E-002
+      ZAXIS_CS =   -0.0000000000000000       0.19744908719699858        4.4031495694821354E-003   9.9716398306510766E-003
+  -----------------------------
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  1.94E+04  1.07E+04  3.31E-01  1.220E+00  9.00E-01  2.0081E-01
+  200  8.42E-07  2.55E-07  1.44E-08  1.188E+00  8.10E-01  1.5951E-01
+  400  2.48E-09  8.17E-11  2.88E-11  1.192E+00  8.10E-01  1.5951E-01
+  600  4.80E-12  3.49E-13  7.15E-14  1.192E+00  8.10E-01  1.5951E-01
+  762  9.31E-15  2.31E-15  6.34E-16  1.192E+00  8.10E-01  1.5951E-01
+
+  NS =   51 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =   3000
+  PROCESSOR COUNT - RADIAL:    1
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  2.05E-01  7.49E-02  1.99E-05  1.192E+00  9.00E-01  1.5951E-01
+  200  1.09E-08  1.03E-09  3.61E-11  1.193E+00  9.00E-01  1.5950E-01
+  400  3.35E-11  3.30E-12  5.06E-13  1.193E+00  9.00E-01  1.5950E-01
+  600  4.46E-13  3.75E-14  5.45E-15  1.193E+00  9.00E-01  1.5950E-01
+  800  3.99E-14  7.72E-15  3.76E-16  1.193E+00  9.00E-01  1.5950E-01
+ 1000  2.07E-14  6.00E-15  9.92E-17  1.193E+00  9.00E-01  1.5950E-01
+ 1119  9.66E-15  3.31E-15  6.13E-17  1.193E+00  9.00E-01  1.5950E-01
+
+  NS =  101 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =  20000
+  PROCESSOR COUNT - RADIAL:    1
+ INITIAL JACOBIAN CHANGED SIGN!
+ TRYING TO IMPROVE INITIAL MAGNETIC AXIS GUESS
+  ---- Improved AXIS Guess ----
+      RAXIS_CC =   0.95997895900508556       0.22403017351869248       -3.4880653410143164E-003   4.3300640863832174E-002
+      ZAXIS_CS =   -0.0000000000000000       0.19687317792962111        5.1981103055208167E-003   7.3480454905093728E-003
+  -----------------------------
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  9.66E-15  3.31E-15  6.13E-17  0.000E+00  9.00E-01  3.7392E-02
+    2  9.66E-15  3.31E-15  6.13E-17  0.000E+00  9.00E-01  3.2404E-02
+    3  9.66E-15  3.31E-15  6.13E-17  0.000E+00  9.00E-01  3.2404E-02
+free(): invalid next size (fast)
+[TUE036867:328267] *** Process received signal ***
+[TUE036867:328267] Signal: Aborted (6)
+[TUE036867:328267] Signal code:  (-6)
+[TUE036867:328267] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x42520)[0x7ff0016ab520]
+[TUE036867:328267] [ 1] /lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x12c)[0x7ff0016ff9fc]
+[TUE036867:328267] [ 2] /lib/x86_64-linux-gnu/libc.so.6(raise+0x16)[0x7ff0016ab476]
+[TUE036867:328267] [ 3] /lib/x86_64-linux-gnu/libc.so.6(abort+0xd3)[0x7ff0016917f3]
+[TUE036867:328267] [ 4] /lib/x86_64-linux-gnu/libc.so.6(+0x89676)[0x7ff0016f2676]
+[TUE036867:328267] [ 5] /lib/x86_64-linux-gnu/libc.so.6(+0xa0cfc)[0x7ff001709cfc]
+[TUE036867:328267] [ 6] /lib/x86_64-linux-gnu/libc.so.6(+0xa2a9d)[0x7ff00170ba9d]
+[TUE036867:328267] [ 7] /lib/x86_64-linux-gnu/libc.so.6(free+0x73)[0x7ff00170e453]
+[TUE036867:328267] [ 8] /home/wrutten/anaconda3/envs/sims_opt_env/lib/python3.8/site-packages/vmec-0.0.4-py3.8-linux-x86_64.egg/vmec/_vmec.cpython-38-x86_64-linux-gnu.so(cleanup_+0x792)[0x7fef3e9b7fa2]
+[TUE036867:328267] [ 9] /home/wrutten/anaconda3/envs/sims_opt_env/lib/python3.8/site-packages/vmec-0.0.4-py3.8-linux-x86_64.egg/vmec/_vmec.cpython-38-x86_64-linux-gnu.so(+0x51009)[0x7fef3e955009]
+[TUE036867:328267] [10] python(_PyObject_MakeTpCall+0x2b4)[0x556056f81124]
+[TUE036867:328267] [11] python(_PyEval_EvalFrameDefault+0x4fea)[0x556056f7d8da]
+[TUE036867:328267] [12] python(_PyFunction_Vectorcall+0xfe)[0x556056f888be]
+[TUE036867:328267] [13] python(_PyEval_EvalFrameDefault+0x4975)[0x556056f7d265]
+[TUE036867:328267] [14] python(_PyFunction_Vectorcall+0xfe)[0x556056f888be]
+[TUE036867:328267] [15] python(_PyEval_EvalFrameDefault+0x715)[0x556056f79005]
+[TUE036867:328267] [16] python(_PyFunction_Vectorcall+0xfe)[0x556056f888be]
+[TUE036867:328267] [17] python(_PyEval_EvalFrameDefault+0x715)[0x556056f79005]
+[TUE036867:328267] [18] python(_PyFunction_Vectorcall+0xfe)[0x556056f888be]
+[TUE036867:328267] [19] python(_PyEval_EvalFrameDefault+0x715)[0x556056f79005]
+[TUE036867:328267] [20] python(_PyEval_EvalCodeWithName+0x316)[0x556056f77906]
+[TUE036867:328267] [21] python(PyEval_EvalCodeEx+0x39)[0x556057011449]
+[TUE036867:328267] [22] python(PyEval_EvalCode+0x1b)[0x55605701140b]
+[TUE036867:328267] [23] python(+0x1d1fd6)[0x556057032fd6]
+[TUE036867:328267] [24] python(+0x1d0ff2)[0x556057031ff2]
+[TUE036867:328267] [25] python(+0x99e89)[0x556056efae89]
+[TUE036867:328267] [26] python(PyRun_SimpleFileExFlags+0x3b4)[0x556056efa9eb]
+[TUE036867:328267] [27] python(+0x8d473)[0x556056eee473]
+[TUE036867:328267] [28] python(Py_BytesMain+0x37)[0x556057005267]
+[TUE036867:328267] [29] /lib/x86_64-linux-gnu/libc.so.6(+0x29d90)[0x7ff001692d90]
+[TUE036867:328267] *** End of error message ***
+plot_scan.sh: line 10: 328267 Aborted                 python "$PYTHON_SCRIPT".py "--results_folder" "$PARENT_DIR/$SUBDIR_NAME"
+Execution time: 46 seconds

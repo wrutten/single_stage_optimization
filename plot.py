@@ -55,12 +55,12 @@ parser.add_argument("--nfieldlines", type=int, default=12)
 parser.add_argument("--tmax_fl", type=int, default=5000)
 parser.add_argument("--nphi_QFM", type=int, default=30) #!!! #50?? based on inputs.py
 parser.add_argument("--ntheta_QFM", type=int, default=40) #!!! #35?? based on inputs.py
-parser.add_argument("--mpol", type=int, default=3) #!!!
-parser.add_argument("--ntor", type=int, default=3) #!!!
+parser.add_argument("--mpol", type=int, default=7) #!!!
+parser.add_argument("--ntor", type=int, default=7) #!!!
 parser.add_argument("--nphi", type=int, default=256)
 parser.add_argument("--ntheta", type=int, default=128)
 parser.add_argument("--tol_qfm", type=float, default=1e-14) #!!!
-parser.add_argument("--tol_poincare", type=float, default=1e-15)
+parser.add_argument("--tol_poincare", type=float, default=1e-10)
 parser.add_argument("--maxiter_qfm", type=int, default=1000) #!!!
 parser.add_argument("--constraint_weight", type=float, default=1e+0)
 parser.add_argument("--ntheta_VMEC", type=int, default=80)

@@ -116,120 +116,120 @@ fig_name = 'scan_QS-QF.png'
 fig_path = rootdir + fig_name
 fig.savefig(fig_path)
 
-# ## benchmark plot
-# fig2, ax2 = plt.subplots()
+## benchmark plot
+fig2, ax2 = plt.subplots()
 
-# jorge_ts_QS = 2.0e-3
-# jorge_ts_QF = 3.1e-5
-# jorge_ss_QS = 1.3e-2
-# jorge_ss_QF = 8.3e-6
-# ax2.scatter(3,jorge_ss_QS, marker='x', color='0.8')
-# ax2.scatter(3,jorge_ss_QF, marker='o', color='0.8')
-# ax2.scatter(3,jorge_ts_QS, marker='x', color='tab:orange')
-# ax2.scatter(3,jorge_ts_QF, marker='o', color='tab:orange')
-# ax2.scatter(3,benchmark_ss_QS, marker='x', color='0')
-# ax2.scatter(3,benchmark_ss_QF, marker='o', color='0')
-# ax2.scatter(3,benchmark_ts_QS, marker='x', color='tab:red')
-# ax2.scatter(3,benchmark_ts_QF, marker='o', color='tab:red')
+jorge_ts_QS = 2.0e-3
+jorge_ts_QF = 3.1e-5
+jorge_ss_QS = 1.3e-2
+jorge_ss_QF = 8.3e-6
+ax2.scatter(3,jorge_ss_QS, marker='x', color='0.8')
+ax2.scatter(3,jorge_ss_QF, marker='o', color='0.8')
+ax2.scatter(3,jorge_ts_QS, marker='x', color='tab:orange')
+ax2.scatter(3,jorge_ts_QF, marker='o', color='tab:orange')
+ax2.scatter(3,benchmark_ss_QS, marker='x', color='0')
+ax2.scatter(3,benchmark_ss_QF, marker='o', color='0')
+ax2.scatter(3,benchmark_ts_QS, marker='x', color='tab:red')
+ax2.scatter(3,benchmark_ts_QF, marker='o', color='tab:red')
 
-# ax2.legend(['Single stage QS', 'Single stage QF', 'Two stage QS', 'Two stage QF', 'Jorge Single stage QS', 'Jorge Single stage QF', 'Jorge Two stage QS', 'Jorge Two stage QF'], loc='center left', bbox_to_anchor=(1, 0.5))
-
-
-# ax2.set_yscale('log')
-# ax2.set_xlabel('# coils')
-# ax2.set_ylabel('Objective')
-# fig2.tight_layout()
-
-# fig_name = 'benchmark_plot.png'
-# fig_path = rootdir + fig_name
-# fig2.savefig(fig_path)
-
-# ## Objectives plotting
-# for i in range(len(ss_objectives)):
-#     figi, axi = plt.subplots(tight_layout=True)
-#     axi.scatter(ss_X,ss_J_list[i], marker='x', color='0')
-#     axi.scatter(ts_X,ts_J_list[i], marker='x', color='tab:red')
-#     axi.legend(['Single stage', 'Two stage'], loc='center left', bbox_to_anchor=(1, 0.5))
-
-#     axi.set_yscale('log')
-#     axi.set_xlabel('# coils')
-#     axi.set_ylabel(objectives_legend[i])
-#     axi.grid(color='0.3', linestyle='-.', linewidth=.5)
-#     axi.tick_params(which='both', direction="in")
-
-#     fig_name = 'Scan_' + objectives_legend[i]  +'.png'
-#     fig_path = rootdir + fig_name
-#     figi.savefig(fig_path)
-
-# ## Objectives plotting
-# fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize_sidebyside, tight_layout=True, sharey=True)
-
-# # Exclude total J to make marker color black. (should be done with a proper colormap)
-# ax1.scatter(ss_X,ss_J_list[0], marker='x', color='k')
-# ax2.scatter(ts_X,ts_J_list[0], marker='x', color='k')
-# for i in range(len(ss_objectives)-1): #Make length one shorter to exclude scatter of total J 
-#     ax1.scatter(ss_X,ss_J_list[i+1])
-#     ax2.scatter(ts_X,ts_J_list[i+1])
-# # Scatter J marker again to put it on top. Workaround to easily make sure legend is still right.
-# ax1.scatter(ss_X,ss_J_list[0], marker='x', color='k')
-# ax2.scatter(ts_X,ts_J_list[0], marker='x', color='k')
-
-# ax1.set_title('Single stage')
-# ax1.set_yscale('log')
-# ax1.set_xlabel('# coils')
-# ax1.set_ylabel('Objective')
-# ax1.grid(color='0.1', linestyle='-.', linewidth=.5)
-# ax1.tick_params(which='both', direction="in")
-
-# # ax1.legend(ss_objectives, loc='center left', bbox_to_anchor=(1, 0.5)) # Can be excluded, as colormap is the same for both subplots
-
-# ax2.set_title('Two stage')
-# ax2.set_yscale('log')
-# ax2.set_xlabel('# coils')
-# # ax2.set_ylabel('Objective') # captured by shared axis
-# ax2.grid(color='0.3', linestyle='-.', linewidth=.5)
-# ax2.tick_params(which='both', direction="in")
-
-# ax2.legend(objectives_legend, loc='center left', bbox_to_anchor=(1, 0.5))
-
-# fig_name = 'Scan_objectives.png'
-# fig_path = rootdir + fig_name
-# fig.savefig(fig_path)
-
-# # ## Plot proof that coils are in eachothers way
-# fig, (ax1,ax2) = plt.subplots(1, 2, figsize=figsize_sidebyside, tight_layout=True)
-
-# # Plot correct constraint value
-# if scan_name == 'results/QH_BenchmarkScan_3/':
-#     Coil_constraint_value = 0.15
-# elif scan_name == 'results/QH_BenchmarkScan_2/':
-#     Coil_constraint_value = 0.08
-# else:
-#     Coil_constraint_value = 0.08
-#     print('Coil_constraint_value = 0.08, is used may not be correct.')
-
-# # Actual coil-coil distances
-# ax1.scatter(ss_X,ss_CC, marker='x', color='0')
-# ax1.scatter(ts_X,ts_CC, marker='x', color='tab:red')
-# ax1.axhline(y=Coil_constraint_value, color='k', linestyle='--')
-# ax1.set_xlabel('# coils')
-# ax1.set_ylabel('d_min [m]')
-# ax1.set_title('Minimum coil-coil distance')
-
-# # Actual msc
-# ax2.scatter(ss_X,ss_msc, marker='x', color='0')
-# ax2.scatter(ts_X,ts_msc, marker='x', color='tab:red')
-# ax2.axhline(y=10, color='k', linestyle='--')
-# ax2.legend(['Single stage', 'Two stage', 'Constraint value'], loc='center left', bbox_to_anchor=(1, 0.5))
-# ax2.set_xlabel('# coils')
-# ax2.set_ylabel('unit?')
-# ax2.set_title('Maximum coil mean square curvature')
+ax2.legend(['Single stage QS', 'Single stage QF', 'Two stage QS', 'Two stage QF', 'Jorge Single stage QS', 'Jorge Single stage QF', 'Jorge Two stage QS', 'Jorge Two stage QF'], loc='center left', bbox_to_anchor=(1, 0.5))
 
 
-# fig_name = 'scan_coil_problems.png'
-# fig_path = rootdir + fig_name
-# fig.savefig(fig_path)
-# # fig1.show()
+ax2.set_yscale('log')
+ax2.set_xlabel('# coils')
+ax2.set_ylabel('Objective')
+fig2.tight_layout()
+
+fig_name = 'benchmark_plot.png'
+fig_path = rootdir + fig_name
+fig2.savefig(fig_path)
+
+## Objectives plotting
+for i in range(len(ss_objectives)):
+    figi, axi = plt.subplots(tight_layout=True)
+    axi.scatter(ss_X,ss_J_list[i], marker='x', color='0')
+    axi.scatter(ts_X,ts_J_list[i], marker='x', color='tab:red')
+    axi.legend(['Single stage', 'Two stage'], loc='center left', bbox_to_anchor=(1, 0.5))
+
+    axi.set_yscale('log')
+    axi.set_xlabel('# coils')
+    axi.set_ylabel(objectives_legend[i])
+    axi.grid(color='0.3', linestyle='-.', linewidth=.5)
+    axi.tick_params(which='both', direction="in")
+
+    fig_name = 'Scan_' + objectives_legend[i]  +'.png'
+    fig_path = rootdir + fig_name
+    figi.savefig(fig_path)
+
+## Objectives plotting
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize_sidebyside, tight_layout=True, sharey=True)
+
+# Exclude total J to make marker color black. (should be done with a proper colormap)
+ax1.scatter(ss_X,ss_J_list[0], marker='x', color='k')
+ax2.scatter(ts_X,ts_J_list[0], marker='x', color='k')
+for i in range(len(ss_objectives)-1): #Make length one shorter to exclude scatter of total J 
+    ax1.scatter(ss_X,ss_J_list[i+1])
+    ax2.scatter(ts_X,ts_J_list[i+1])
+# Scatter J marker again to put it on top. Workaround to easily make sure legend is still right.
+ax1.scatter(ss_X,ss_J_list[0], marker='x', color='k')
+ax2.scatter(ts_X,ts_J_list[0], marker='x', color='k')
+
+ax1.set_title('Single stage')
+ax1.set_yscale('log')
+ax1.set_xlabel('# coils')
+ax1.set_ylabel('Objective')
+ax1.grid(color='0.1', linestyle='-.', linewidth=.5)
+ax1.tick_params(which='both', direction="in")
+
+# ax1.legend(ss_objectives, loc='center left', bbox_to_anchor=(1, 0.5)) # Can be excluded, as colormap is the same for both subplots
+
+ax2.set_title('Two stage')
+ax2.set_yscale('log')
+ax2.set_xlabel('# coils')
+# ax2.set_ylabel('Objective') # captured by shared axis
+ax2.grid(color='0.3', linestyle='-.', linewidth=.5)
+ax2.tick_params(which='both', direction="in")
+
+ax2.legend(objectives_legend, loc='center left', bbox_to_anchor=(1, 0.5))
+
+fig_name = 'Scan_objectives.png'
+fig_path = rootdir + fig_name
+fig.savefig(fig_path)
+
+# ## Plot proof that coils are in eachothers way
+fig, (ax1,ax2) = plt.subplots(1, 2, figsize=figsize_sidebyside, tight_layout=True)
+
+# Plot correct constraint value
+if scan_name == 'results/QH_BenchmarkScan_3/':
+    Coil_constraint_value = 0.15
+elif scan_name == 'results/QH_BenchmarkScan_2/':
+    Coil_constraint_value = 0.08
+else:
+    Coil_constraint_value = 0.08
+    print('Coil_constraint_value = 0.08, is used may not be correct.')
+
+# Actual coil-coil distances
+ax1.scatter(ss_X,ss_CC, marker='x', color='0')
+ax1.scatter(ts_X,ts_CC, marker='x', color='tab:red')
+ax1.axhline(y=Coil_constraint_value, color='k', linestyle='--')
+ax1.set_xlabel('# coils')
+ax1.set_ylabel('d_min [m]')
+ax1.set_title('Minimum coil-coil distance')
+
+# Actual msc
+ax2.scatter(ss_X,ss_msc, marker='x', color='0')
+ax2.scatter(ts_X,ts_msc, marker='x', color='tab:red')
+ax2.axhline(y=10, color='k', linestyle='--')
+ax2.legend(['Single stage', 'Two stage', 'Constraint value'], loc='center left', bbox_to_anchor=(1, 0.5))
+ax2.set_xlabel('# coils')
+ax2.set_ylabel('unit?')
+ax2.set_title('Maximum coil mean square curvature')
+
+
+fig_name = 'scan_coil_problems.png'
+fig_path = rootdir + fig_name
+fig.savefig(fig_path)
+# fig1.show()
 
 ## QFM plot
 # Extract QFM data
@@ -245,6 +245,8 @@ ax.legend(['Single stage', 'Two stage'], loc='center left', bbox_to_anchor=(1, 0
 ax.set_xlabel('# coils')
 ax.set_ylabel('QFM quasisymmetry')
 ax.set_yscale('log')
+ax.grid(color='0.1', linestyle='-.', linewidth=.5)
+ax.tick_params(which='both', direction="in")
 
 # ax.set_title('Maximum coil mean square curvature')
 

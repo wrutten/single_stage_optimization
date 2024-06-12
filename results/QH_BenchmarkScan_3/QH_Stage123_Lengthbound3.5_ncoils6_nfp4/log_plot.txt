@@ -1,0 +1,156 @@
+Running plot.py on results/QH_BenchmarkScan_3/QH_Stage123_Lengthbound3.5_ncoils6_nfp4
+QStandardPaths: wrong permissions on runtime directory /run/user/1000/, 0755 instead of 0700
+Finding QFM surface
+Obtaining QFM surface
+Initial qfm.J()=0.0001299175985779901
+Initial ||vol constraint||=0.00000000e+00, ||residual||=1.29917599e-04
+ftol =  1e-14
+||vol constraint||=5.80717683e-08, ||residual||=9.38406859e-05
+||vol constraint||=9.21309235e-23, ||residual||=9.39571369e-05
+Found QFM surface in 2.9201672077178955s.
+[Errno 2] No such file or directory: '/home/wrutten/single_stage_optimization/results/QH_BenchmarkScan_3/QH_Stage123_Lengthbound3.5_ncoils6_nfp4/output/wout_qfm_000_000000.nc'
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  SEQ =    1 TIME SLICE  0.0000E+00
+  PROCESSING INPUT.stage1
+  THIS IS PARVMEC (PARALLEL VMEC), VERSION 9.0
+  Lambda: Full Radial Mesh. L-Force: hybrid full/half.
+
+  COMPUTER: x86_64-conda-linux-gnu   OS:    RELEASE: x86_64  DATE = Jun 07,2024  TIME = 14:30:41
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  SEQ =    1 TIME SLICE  0.0000E+00
+  PROCESSING INPUT.final
+  THIS IS PARVMEC (PARALLEL VMEC), VERSION 9.0
+  Lambda: Full Radial Mesh. L-Force: hybrid full/half.
+
+  COMPUTER: x86_64-conda-linux-gnu   OS:    RELEASE: x86_64  DATE = Jun 07,2024  TIME = 14:30:58
+
+  NS =   16 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =   2000
+  PROCESSOR COUNT - RADIAL:    1
+ INITIAL JACOBIAN CHANGED SIGN!
+ TRYING TO IMPROVE INITIAL MAGNETIC AXIS GUESS
+  ---- Improved AXIS Guess ----
+      RAXIS_CC =   0.99817152420410438       0.21358392162799381        1.5543787781754890E-002   9.4805925372268528E-003
+      ZAXIS_CS =   -0.0000000000000000       0.17972710924966862        2.3124186834162480E-002  -1.8894715195984387E-003
+  -----------------------------
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  2.06E-01  4.19E-02  1.36E-01  1.237E+00  9.00E-01  1.8832E-01
+  200  4.38E-07  6.91E-08  2.31E-08  1.200E+00  5.31E-01  1.7490E-01
+  400  8.71E-10  1.26E-10  4.09E-11  1.201E+00  5.31E-01  1.7490E-01
+  600  2.69E-12  6.84E-13  1.37E-13  1.202E+00  5.31E-01  1.7490E-01
+  800  2.75E-13  3.93E-14  1.72E-14  1.202E+00  5.31E-01  1.7490E-01
+  942  7.69E-15  1.06E-15  7.15E-16  1.202E+00  5.31E-01  1.7490E-01
+
+  NS =   51 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =   3000
+  PROCESSOR COUNT - RADIAL:    1
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  9.04E-03  3.91E-03  2.68E-06  1.202E+00  9.00E-01  1.7490E-01
+  200  3.14E-11  1.00E-11  8.44E-13  1.202E+00  9.00E-01  1.7489E-01
+  400  1.33E-13  1.48E-14  1.98E-15  1.202E+00  9.00E-01  1.7489E-01
+  479  9.45E-15  2.21E-15  2.67E-16  1.202E+00  9.00E-01  1.7489E-01
+
+  NS =  101 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =  20000
+  PROCESSOR COUNT - RADIAL:    1
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  9.52E-03  3.60E-03  5.90E-08  1.202E+00  9.00E-01  1.7489E-01
+  200  5.81E-10  1.24E-10  2.50E-12  1.202E+00  7.08E-01  1.7489E-01
+  400  3.26E-12  6.70E-13  4.51E-14  1.202E+00  7.08E-01  1.7489E-01
+  600  8.05E-14  1.56E-14  8.69E-16  1.202E+00  7.08E-01  1.7489E-01
+  726  9.96E-15  2.01E-15  1.46E-16  1.202E+00  7.08E-01  1.7489E-01
+Quasisymmetry of QFM fixed boundary solution single-stage: 1.0778360601837906
+Finding QFM surface for stage 1+2
+Obtaining QFM surface for stage 1+2
+Initial qfm.J()=0.00044795097966720323
+Initial ||vol constraint||=0.00000000e+00, ||residual||=4.47950980e-04
+ftol =  1e-14
+||vol constraint||=7.61829129e-10, ||residual||=1.34827912e-05
+||vol constraint||=1.92135481e-20, ||residual||=1.34843156e-05
+Found QFM surface in 5.55260968208313s.
+[Errno 2] No such file or directory: '/home/wrutten/single_stage_optimization/results/QH_BenchmarkScan_3/QH_Stage123_Lengthbound3.5_ncoils6_nfp4/output/wout_qfm_stage12_000_000000.nc'
+
+ EXECUTION TERMINATED NORMALLY
+
+ FILE : final_000_000000
+ NUMBER OF JACOBIAN RESETS =    2
+
+    TOTAL COMPUTATIONAL TIME (SEC)         2.02
+    TIME TO INPUT/OUTPUT                   0.00
+       READ IN DATA                        0.00
+       WRITE OUT DATA TO WOUT              0.00
+    TIME IN FUNCT3D                        2.00
+       BCOVAR FIELDS                       0.36
+       FOURIER TRANSFORM                   0.30
+       INVERSE FOURIER TRANSFORM           0.24
+       FORCES AND SYMMETRIZE               0.40
+       RESIDUE                             0.55
+       EQFORCE                             0.00
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  VMEC OUTPUT FILES ALREADY EXIST: OVERWRITING THEM ...
+  SEQ =    1 TIME SLICE  0.0000E+00
+  PROCESSING INPUT.final
+  THIS IS PARVMEC (PARALLEL VMEC), VERSION 9.0
+  Lambda: Full Radial Mesh. L-Force: hybrid full/half.
+
+  COMPUTER: x86_64-conda-linux-gnu   OS:    RELEASE: x86_64  DATE = Jun 07,2024  TIME = 14:31:05
+
+  NS =   16 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =   2000
+  PROCESSOR COUNT - RADIAL:    1
+ INITIAL JACOBIAN CHANGED SIGN!
+ TRYING TO IMPROVE INITIAL MAGNETIC AXIS GUESS
+  ---- Improved AXIS Guess ----
+      RAXIS_CC =   0.99087012012761333       0.20233148579255530        3.2153317340140167E-002  -8.4120459793596042E-004
+      ZAXIS_CS =   -0.0000000000000000       0.19295485928394160        2.3132275762981054E-002   6.1544794050721677E-003
+  -----------------------------
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  2.37E-01  1.36E-01  2.60E-01  1.225E+00  9.00E-01  1.6739E-01
+  200  5.26E-07  1.31E-07  3.05E-08  1.203E+00  5.31E-01  1.4451E-01
+  400  1.15E-09  9.98E-11  7.54E-11  1.205E+00  5.31E-01  1.4451E-01
+  600  2.90E-12  3.99E-13  3.03E-13  1.205E+00  5.31E-01  1.4451E-01
+  800  1.97E-13  2.89E-14  2.12E-14  1.205E+00  5.31E-01  1.4451E-01
+  932  9.44E-15  1.48E-15  1.22E-15  1.205E+00  5.31E-01  1.4451E-01
+
+  NS =   51 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =   3000
+  PROCESSOR COUNT - RADIAL:    1
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  4.76E-02  2.56E-02  2.15E-05  1.205E+00  9.00E-01  1.4451E-01
+  200  3.96E-11  1.77E-11  7.14E-13  1.206E+00  9.00E-01  1.4451E-01
+  400  4.53E-14  1.47E-14  1.06E-15  1.206E+00  9.00E-01  1.4451E-01
+  456  9.98E-15  4.57E-15  3.52E-16  1.206E+00  9.00E-01  1.4451E-01
+
+  NS =  101 NO. FOURIER MODES =   18 FTOLV =  1.000E-14 NITER =  20000
+  PROCESSOR COUNT - RADIAL:    1
+
+  ITER    FSQR      FSQZ      FSQL    RAX(v=0)    DELT       WMHD
+
+    1  4.48E-02  2.31E-02  2.30E-07  1.206E+00  9.00E-01  1.4451E-01
+  200  1.26E-10  5.78E-11  1.38E-12  1.206E+00  7.29E-01  1.4451E-01
+  400  4.85E-13  8.17E-14  7.18E-15  1.206E+00  7.29E-01  1.4451E-01
+  589  9.83E-15  1.83E-15  1.88E-16  1.206E+00  7.29E-01  1.4451E-01
+Quasisymmetry of QFM fixed boundary solution stage 1+2: 3.50703719286243
+
+ EXECUTION TERMINATED NORMALLY
+
+ FILE : final_000_000000
+ NUMBER OF JACOBIAN RESETS =    2
+
+    TOTAL COMPUTATIONAL TIME (SEC)         1.73
+    TIME TO INPUT/OUTPUT                   0.00
+       READ IN DATA                        0.00
+       WRITE OUT DATA TO WOUT              0.00
+    TIME IN FUNCT3D                        1.71
+       BCOVAR FIELDS                       0.31
+       FOURIER TRANSFORM                   0.25
+       INVERSE FOURIER TRANSFORM           0.21
+       FORCES AND SYMMETRIZE               0.34
+       RESIDUE                             0.47
+       EQFORCE                             0.00
+Execution time: 28 seconds

@@ -1,0 +1,2 @@
+This run seems to provide the best results. QFM shows right behaviour for single stage vs two stage. Poincare seems best out of all.
+However, I am not able to consistently reproduce this result. So severe limitations on the accuracy of results apply.

@@ -40,28 +40,28 @@ parser = argparse.ArgumentParser()
 # parser.add_argument("--results_folder",default='Paper_CNT_Stage123_Lengthbound3.8_ncoils4_circular')
 # parser.add_argument("--results_folder",default='QA_Stage123_Lengthbound5.5_ncoils3_nfp2')
 # parser.add_argument("--results_folder",default='QA_Stage123_Lengthbound5.5_ncoils2_nfp3')
-parser.add_argument("--results_folder",default='not_used_in_scan')
+parser.add_argument("--results_folder",default='QH_BenchmarkQFMScan/QH_Stage123_Lengthbound3.5_ncoils3_nfp4_w7e3_nm5_copy copy')
 # parser.add_argument("--results_folder",default='QI_Stage123_Lengthbound4.5_ncoils3_nfp2')
 # parser.add_argument("--results_folder",default='QH_Stage123_Lengthbound3.5_ncoils3_nfp4')
 parser.add_argument("--coils_stage1", default='biot_savart_inner_loop_max_mode_3.json')
 parser.add_argument("--create_QFM", dest="create_QFM", default=True, action="store_true")
 parser.add_argument("--create_QFM_stage12", dest="create_QFM_stage12", default=True, action="store_true")
-parser.add_argument("--create_Poincare", dest="create_Poincare", default=False, action="store_true")
-parser.add_argument("--whole_torus", dest="whole_torus", default=True, action="store_true")
+parser.add_argument("--create_Poincare", dest="create_Poincare", default=True, action="store_true")
+parser.add_argument("--whole_torus", dest="whole_torus", default=False, action="store_true")
 parser.add_argument("--plot_VMEC", dest="plot_VMEC", default=True, action="store_true")
 parser.add_argument("--plot_VMEC_QFM", dest="plot_VMEC_QFM", default=True, action="store_true")
 parser.add_argument("--volume_scale", type=float, default=1.0)
 parser.add_argument("--nfieldlines", type=int, default=12)
-parser.add_argument("--tmax_fl", type=int, default=5000)
+parser.add_argument("--tmax_fl", type=int, default=1500)
 parser.add_argument("--nphi_QFM", type=int, default=30) #!!! #50?? based on inputs.py
 parser.add_argument("--ntheta_QFM", type=int, default=40) #!!! #35?? based on inputs.py
-parser.add_argument("--mpol", type=int, default=7) #!!!
-parser.add_argument("--ntor", type=int, default=7) #!!!
+parser.add_argument("--mpol", type=int, default=5) #!!!
+parser.add_argument("--ntor", type=int, default=5) #!!!
 parser.add_argument("--nphi", type=int, default=256)
 parser.add_argument("--ntheta", type=int, default=128)
 parser.add_argument("--tol_qfm", type=float, default=1e-14) #!!!
 parser.add_argument("--tol_poincare", type=float, default=1e-10)
-parser.add_argument("--maxiter_qfm", type=int, default=1000) #!!!
+parser.add_argument("--maxiter_qfm", type=int, default=5000) #!!!
 parser.add_argument("--constraint_weight", type=float, default=1e+0)
 parser.add_argument("--ntheta_VMEC", type=int, default=80)
 parser.add_argument("--boozxform_nsurfaces", type=int, default=10)
@@ -207,9 +207,10 @@ if args.create_QFM:
             pprint(f"Initial ||vol constraint||={0.5*(s.volume()-vol_target)**2:.8e}, ||residual||={np.linalg.norm(qfm.J()):.8e}")
             res = qfm_surface.minimize_qfm_penalty_constraints_LBFGS(tol=args.tol_qfm, maxiter=args.maxiter_qfm, constraint_weight=args.constraint_weight)
             pprint(f"||vol constraint||={0.5*(s.volume()-vol_target)**2:.8e}, ||residual||={np.linalg.norm(qfm.J()):.8e}")
+            pprint(f"Intermediate step Converged: {res['success']}")
             res = qfm_surface.minimize_qfm_exact_constraints_SLSQP(tol=args.tol_qfm, maxiter=args.maxiter_qfm/10)
             pprint(f"||vol constraint||={0.5*(s.volume()-vol_target)**2:.8e}, ||residual||={np.linalg.norm(qfm.J()):.8e}")
-            pprint(f"Found QFM surface in {time.time()-t1}s.")
+            pprint(f"Found QFM surface in {time.time()-t1}s. Converged: {res['success']}")
             s.to_vtk(os.path.join(OUT_DIR, 'QFM_found'))
             s_gamma = s.gamma()
             s_R = np.sqrt(s_gamma[:, :, 0]**2 + s_gamma[:, :, 1]**2)
@@ -240,20 +241,19 @@ if args.create_QFM:
             vmec_QFM.indata.ftol_array[:3]  = [1e-14, 1e-14, 1e-14]
             vmec_QFM.indata.am[0:10] = [0]*10
             vmec_QFM.write_input(os.path.join(this_path,f'input.qfm'))
+            vmec_QFM = Vmec(os.path.join(this_path,f'input.qfm'), verbose=args.vmec_verbose) # Redefine to make sure output is named wout_qfm instead of wout_final
         else:
             os.chdir(OUT_DIR)
-            vmec_QFM = Vmec(os.path.join(this_path,f'input.qfm'), verbose=True)#args.vmec_verbose)
-            try:
-                vmec_QFM.run()
-                vmec_ran_QFM = True
-            except Exception as e:
-                pprint('VMEC QFM did not converge')
-                pprint(e)
+            vmec_QFM = Vmec(os.path.join(this_path,f'input.qfm'), verbose=args.vmec_verbose)
+        # Should always try run VMEC on input.qfm if wout.qfm is not present. Removed 
         try:
+            vmec_QFM.run()
+            vmec_ran_QFM = True            
             shutil.move(os.path.join(OUT_DIR, f"wout_qfm_000_000000.nc"), os.path.join(this_path, f"wout_QFM.nc"))
             os.remove(os.path.join(OUT_DIR, f'input.qfm_000_000000'))
         except Exception as e:
-            print(e)
+            pprint('VMEC QFM did not converge')
+            pprint(e)
 
     if YY == "QI":
         qi = QuasiIsodynamicResidual(vmec_QFM,snorms=snorms, nphi=nphi_QI, nalpha=nalpha_QI, nBj=nBj_QI, mpol=mpol_QI, ntor=ntor_QI, nphi_out=nphi_out_QI, arr_out=arr_out_QI)
@@ -338,6 +338,7 @@ if (vmec_ran_QFM or os.path.isfile(os.path.join(this_path, f"wout_QFM.nc"))) and
         # fig = plt.figure(); bx.modeplot(b1.bx, sqrts=True); plt.xlabel(r'$s=\psi/\psi_b$')
         # plt.savefig(os.path.join(OUT_DIR, "Boozxform_modeplot_QFM.pdf"), bbox_inches = 'tight', pad_inches = 0); plt.close()
 
+## Single_stage Poincare
 if args.create_Poincare:
     if vmec_ran_QFM or os.path.isfile(os.path.join(this_path, f"wout_QFM.nc")):
         R0 = R[0,:,0]
@@ -457,22 +458,18 @@ if args.create_QFM_stage12:
             vmec_QFM.indata.ftol_array[:3]  = [1e-14, 1e-14, 1e-14]
             vmec_QFM.indata.am[0:10] = [0]*10
             vmec_QFM.write_input(os.path.join(this_path,f'input.qfm_stage12'))
+            vmec_QFM = Vmec(os.path.join(this_path,f'input.qfm_stage12'), verbose=args.vmec_verbose) # Redefine to make sure output is named wout_qfm instead of wout_final
         else:
             os.chdir(OUT_DIR)
             vmec_QFM = Vmec(os.path.join(this_path,f'input.qfm_stage12'), verbose=True)#args.vmec_verbose)
-            vmec_QFM.indata.ns_array[:3]    = [  16,    51,    101]
-            vmec_QFM.indata.niter_array[:3] = [20000, 30000, 50000]
-            vmec_QFM.indata.ftol_array[:3]  = [1e-14, 1e-14, 1e-14]
-            try:
-                vmec_QFM.run()
-                vmec_ran_QFM = True
-            except Exception as e:
-                pprint('VMEC QFM did not converge')
-                pprint(e)
+        # Should always try run VMEC on input.qfm if wout.qfm is not present. Removed 
         try:
+            vmec_QFM.run()
+            vmec_ran_QFM_stage12 = True
             shutil.move(os.path.join(OUT_DIR, f"wout_qfm_stage12_000_000000.nc"), os.path.join(this_path, f"wout_qfm_stage12.nc"))
             os.remove(os.path.join(OUT_DIR, f'input.qfm_stage12_000_000000'))
         except Exception as e:
+            pprint('VMEC QFM_stage12 did not converge')
             pprint(e)
 
     if YY == "QI":

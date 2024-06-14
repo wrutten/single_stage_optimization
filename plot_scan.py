@@ -9,9 +9,10 @@ import matplotlib.pyplot as plt
 from src.my_utils import get_convergence_data, read_QFM_output_files
 
 parent_path = str(Path(__file__).parent.resolve())
-scan_name = 'results/QH_BenchmarkLongerRunsChangeCoilWeights/'
+scan_name = 'results/QH_BenchmarkScan_4/'
 os.chdir(parent_path)
 rootdir  = os.path.join(parent_path, scan_name)
+QFM_plot_FLAG = False
 
 figsize_sidebyside = (10, 4.5)
 # Make sure that the grid is not plotted over the data.
@@ -116,33 +117,33 @@ fig_name = 'scan_QS-QF.png'
 fig_path = rootdir + fig_name
 fig.savefig(fig_path)
 
-## benchmark plot
-fig2, ax2 = plt.subplots()
+# ## benchmark plot
+# fig2, ax2 = plt.subplots()
 
-jorge_ts_QS = 2.0e-3
-jorge_ts_QF = 3.1e-5
-jorge_ss_QS = 1.3e-2
-jorge_ss_QF = 8.3e-6
-ax2.scatter(3,jorge_ss_QS, marker='x', color='0.8')
-ax2.scatter(3,jorge_ss_QF, marker='o', color='0.8')
-ax2.scatter(3,jorge_ts_QS, marker='x', color='tab:orange')
-ax2.scatter(3,jorge_ts_QF, marker='o', color='tab:orange')
-ax2.scatter(3,benchmark_ss_QS, marker='x', color='0')
-ax2.scatter(3,benchmark_ss_QF, marker='o', color='0')
-ax2.scatter(3,benchmark_ts_QS, marker='x', color='tab:red')
-ax2.scatter(3,benchmark_ts_QF, marker='o', color='tab:red')
+# jorge_ts_QS = 2.0e-3
+# jorge_ts_QF = 3.1e-5
+# jorge_ss_QS = 1.3e-2
+# jorge_ss_QF = 8.3e-6
+# ax2.scatter(3,jorge_ss_QS, marker='x', color='0.8')
+# ax2.scatter(3,jorge_ss_QF, marker='o', color='0.8')
+# ax2.scatter(3,jorge_ts_QS, marker='x', color='tab:orange')
+# ax2.scatter(3,jorge_ts_QF, marker='o', color='tab:orange')
+# ax2.scatter(3,benchmark_ss_QS, marker='x', color='0')
+# ax2.scatter(3,benchmark_ss_QF, marker='o', color='0')
+# ax2.scatter(3,benchmark_ts_QS, marker='x', color='tab:red')
+# ax2.scatter(3,benchmark_ts_QF, marker='o', color='tab:red')
 
-ax2.legend(['Single stage QS', 'Single stage QF', 'Two stage QS', 'Two stage QF', 'Jorge Single stage QS', 'Jorge Single stage QF', 'Jorge Two stage QS', 'Jorge Two stage QF'], loc='center left', bbox_to_anchor=(1, 0.5))
+# ax2.legend(['Single stage QS', 'Single stage QF', 'Two stage QS', 'Two stage QF', 'Jorge Single stage QS', 'Jorge Single stage QF', 'Jorge Two stage QS', 'Jorge Two stage QF'], loc='center left', bbox_to_anchor=(1, 0.5))
 
 
-ax2.set_yscale('log')
-ax2.set_xlabel('# coils')
-ax2.set_ylabel('Objective')
-fig2.tight_layout()
+# ax2.set_yscale('log')
+# ax2.set_xlabel('# coils')
+# ax2.set_ylabel('Objective')
+# fig2.tight_layout()
 
-fig_name = 'benchmark_plot.png'
-fig_path = rootdir + fig_name
-fig2.savefig(fig_path)
+# fig_name = 'benchmark_plot.png'
+# fig_path = rootdir + fig_name
+# fig2.savefig(fig_path)
 
 ## Objectives plotting
 for i in range(len(ss_objectives)):
@@ -200,7 +201,7 @@ fig.savefig(fig_path)
 fig, (ax1,ax2) = plt.subplots(1, 2, figsize=figsize_sidebyside, tight_layout=True)
 
 # Plot correct constraint value
-if scan_name == 'results/QH_BenchmarkScan_3/':
+if scan_name == 'results/QH_BenchmarkScan_3/' or scan_name == 'results/QH_BenchmarkScan_4/':
     Coil_constraint_value = 0.15
 elif scan_name == 'results/QH_BenchmarkScan_2/':
     Coil_constraint_value = 0.08
@@ -231,27 +232,28 @@ fig_path = rootdir + fig_name
 fig.savefig(fig_path)
 # fig1.show()
 
-## QFM plot
-# Extract QFM data
-QFM_dict = read_QFM_output_files(rootdir)
+if QFM_plot_FLAG:
+    ## QFM plot
+    # Extract QFM data
+    QFM_dict = read_QFM_output_files(rootdir)
 
-fig, ax = plt.subplots(tight_layout=True)
+    fig, ax = plt.subplots(tight_layout=True)
 
-for key in QFM_dict:
-    ncoils, ss_QFM_QS, ts_QFM_QS = QFM_dict[key]
-    ax.scatter(ncoils,ss_QFM_QS, marker='x', color='0')
-    ax.scatter(ncoils,ts_QFM_QS, marker='x', color='tab:red')
-ax.legend(['Single stage', 'Two stage'], loc='center left', bbox_to_anchor=(1, 0.5))
-ax.set_xlabel('# coils')
-ax.set_ylabel('QFM quasisymmetry')
-ax.set_yscale('log')
-ax.grid(color='0.1', linestyle='-.', linewidth=.5)
-ax.tick_params(which='both', direction="in")
+    for key in QFM_dict:
+        ncoils, ss_QFM_QS, ts_QFM_QS = QFM_dict[key]
+        ax.scatter(ncoils,ss_QFM_QS, marker='x', color='0')
+        ax.scatter(ncoils,ts_QFM_QS, marker='x', color='tab:red')
+    ax.legend(['Single stage', 'Two stage'], loc='center left', bbox_to_anchor=(1, 0.5))
+    ax.set_xlabel('# coils')
+    ax.set_ylabel('QFM quasisymmetry')
+    ax.set_yscale('log')
+    ax.grid(color='0.1', linestyle='-.', linewidth=.5)
+    ax.tick_params(which='both', direction="in")
 
-# ax.set_title('Maximum coil mean square curvature')
+    # ax.set_title('Maximum coil mean square curvature')
 
-fig_name = 'scan_QFM.png'
-fig_path = rootdir + fig_name
-fig.savefig(fig_path)
+    fig_name = 'scan_QFM.png'
+    fig_path = rootdir + fig_name
+    fig.savefig(fig_path)
 
 print('Finished plotting')

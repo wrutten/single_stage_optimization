@@ -22,7 +22,8 @@ plt.rc('axes', axisbelow=True)
 ts_data, ss_data = get_convergence_data(rootdir)
 
 # Objective to plot
-objectives_legend = ['J_total', 'J_Quadratic_Flux', 'J_Length', 'J_C-C', 'J_Curvature', 'J_Length_penalty', 'J_MSC', 'J_ALS', 'J_Quasisymmetry', 'J_Aspect'] # Jiota excluded because not in objective!
+objectives_titles = ['J_total', 'Quadratic Flux', 'J_Length', 'J_C-C', 'J_Curvature', 'J_Length_penalty', 'J_MSC', 'J_ALS', 'Quasisymmetry', 'J_Aspect'] # Jiota excluded because not in objective!
+objectives_legend = ['J_total', r'$f_{QF}$', 'J_Length', 'J_C-C', 'J_Curvature', 'J_Length_penalty', 'J_MSC', 'J_ALS', r'$f_{QS}$', 'J_Aspect'] # Jiota excluded because not in objective!
 ss_objectives = ['J', 'Jf', 'J_length', 'J_CC', 'J_CURVATURE', 'J_LENGTH_PENALTY', 'J_MSC', 'J_ALS', 'Jquasisymmetry', 'Jaspect'] # Jiota excluded because not in objective!
 ts_objectives = ['J', 'Jf', 'J_length', 'J_CC', 'J_CURVATURE', 'J_LENGTH_PENALTY', 'J_MSC', 'J_ALS']
 
@@ -88,30 +89,31 @@ for dp in ss_data:
 
 
 ## Plot QS and QF over scan range
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize_sidebyside, tight_layout=True, sharey=True)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize_sidebyside, tight_layout=True, sharey=False)
 
-ax1.set_title('Single stage')
+ax1.set_title('Quasisymmetry')
 ax1.set_yscale('log')
-ax1.set_xlabel('# coils')
-ax1.set_ylabel('Objective')
+ax1.set_xlabel(r'$N_c$')
+ax1.set_ylabel(r'$f_{QS}$')
 ax1.grid(color='0.1', linestyle='-.', linewidth=.5)
 ax1.tick_params(which='both', direction="in")
 
-ax2.set_title('Two stage')
+ax2.set_title('Quadratic Flux')
 ax2.set_yscale('log')
-ax2.set_xlabel('# coils')
-# ax2.set_ylabel('Objective') # captured by shared axis
+ax2.set_xlabel(r'$N_c$')
+ax2.set_ylabel(r'$f_{QF}$') # captured by shared axis
 ax2.grid(color='0.3', linestyle='-.', linewidth=.5)
 ax2.tick_params(which='both', direction="in")
 
 # Scatter the data
 ax1.scatter(ss_X,ss_f_QS, marker='x', color='k')
-ax1.scatter(ss_X,ss_f_QF, marker='+', color='k')
-ax2.scatter(ts_X,ts_f_QS, marker='x', color='k')
-ax2.scatter(ts_X,ts_f_QF, marker='+', color='k')
+ax1.scatter(ts_X,ts_f_QS, marker='x', color='r')
+
+ax2.scatter(ts_X,ss_f_QF, marker='x', color='k')
+ax2.scatter(ss_X,ts_f_QF, marker='x', color='r')
 
 # Put legend to right side of righternmost plot
-ax2.legend(['J_Quasisymmetry', 'J_Quadratic_Flux'], loc='center left', bbox_to_anchor=(1, 0.5))
+ax2.legend(['Single stage', 'Two stage'], loc='center left', bbox_to_anchor=(1, 0.5))
 
 fig_name = 'scan_QS-QF.png'
 fig_path = rootdir + fig_name
@@ -137,7 +139,7 @@ fig.savefig(fig_path)
 
 
 # ax2.set_yscale('log')
-# ax2.set_xlabel('# coils')
+# ax2.set_xlabel(r'$N_c$')
 # ax2.set_ylabel('Objective')
 # fig2.tight_layout()
 
@@ -153,12 +155,13 @@ for i in range(len(ss_objectives)):
     axi.legend(['Single stage', 'Two stage'], loc='center left', bbox_to_anchor=(1, 0.5))
 
     axi.set_yscale('log')
-    axi.set_xlabel('# coils')
+    axi.set_xlabel(r'$N_c$')
     axi.set_ylabel(objectives_legend[i])
+    axi.set_title(objectives_titles[i])
     axi.grid(color='0.3', linestyle='-.', linewidth=.5)
     axi.tick_params(which='both', direction="in")
 
-    fig_name = 'Scan_' + objectives_legend[i]  +'.png'
+    fig_name = 'Scan_' + ss_objectives[i]  +'.png'
     fig_path = rootdir + fig_name
     figi.savefig(fig_path)
 
@@ -177,7 +180,7 @@ ax2.scatter(ts_X,ts_J_list[0], marker='x', color='k')
 
 ax1.set_title('Single stage')
 ax1.set_yscale('log')
-ax1.set_xlabel('# coils')
+ax1.set_xlabel(r'$N_c$')
 ax1.set_ylabel('Objective')
 ax1.grid(color='0.1', linestyle='-.', linewidth=.5)
 ax1.tick_params(which='both', direction="in")
@@ -186,7 +189,7 @@ ax1.tick_params(which='both', direction="in")
 
 ax2.set_title('Two stage')
 ax2.set_yscale('log')
-ax2.set_xlabel('# coils')
+ax2.set_xlabel(r'$N_c$')
 # ax2.set_ylabel('Objective') # captured by shared axis
 ax2.grid(color='0.3', linestyle='-.', linewidth=.5)
 ax2.tick_params(which='both', direction="in")
@@ -213,8 +216,8 @@ else:
 ax1.scatter(ss_X,ss_CC, marker='x', color='0')
 ax1.scatter(ts_X,ts_CC, marker='x', color='tab:red')
 ax1.axhline(y=Coil_constraint_value, color='k', linestyle='--')
-ax1.set_xlabel('# coils')
-ax1.set_ylabel('d_min [m]')
+ax1.set_xlabel(r'$N_c$')
+ax1.set_ylabel(r'$d$')
 ax1.set_title('Minimum coil-coil distance')
 
 # Actual msc
@@ -222,8 +225,8 @@ ax2.scatter(ss_X,ss_msc, marker='x', color='0')
 ax2.scatter(ts_X,ts_msc, marker='x', color='tab:red')
 ax2.axhline(y=10, color='k', linestyle='--')
 ax2.legend(['Single stage', 'Two stage', 'Constraint value'], loc='center left', bbox_to_anchor=(1, 0.5))
-ax2.set_xlabel('# coils')
-ax2.set_ylabel('unit?')
+ax2.set_xlabel(r'$N_c$')
+ax2.set_ylabel(r'$\kappa_{msc}$')
 ax2.set_title('Maximum coil mean square curvature')
 
 
@@ -244,7 +247,7 @@ if QFM_plot_FLAG:
         ax.scatter(ncoils,ss_QFM_QS, marker='x', color='0')
         ax.scatter(ncoils,ts_QFM_QS, marker='x', color='tab:red')
     ax.legend(['Single stage', 'Two stage'], loc='center left', bbox_to_anchor=(1, 0.5))
-    ax.set_xlabel('# coils')
+    ax.set_xlabel(r'$N_c$')
     ax.set_ylabel('QFM quasisymmetry')
     ax.set_yscale('log')
     ax.grid(color='0.1', linestyle='-.', linewidth=.5)

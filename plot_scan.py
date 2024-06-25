@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from src.my_utils import get_convergence_data, read_QFM_output_files
 
 parent_path = str(Path(__file__).parent.resolve())
-scan_name = 'results/QH_BenchmarkScan_4/'
+scan_name = 'results/QH_BenchmarkScan_2/'
 os.chdir(parent_path)
 rootdir  = os.path.join(parent_path, scan_name)
 QFM_plot_FLAG = False
